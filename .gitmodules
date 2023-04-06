@@ -1,0 +1,6 @@
+[submodule "AGQA_baselines_code"]
+	path = AGQA_baselines_code
+	url = https://github.com/madeleinegrunde/AGQA_baselines_code.git
+[submodule "ActionGenome"]
+	path = ActionGenome
+	url = https://github.com/JingweiJ/ActionGenome.git
