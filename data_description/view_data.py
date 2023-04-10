@@ -1,9 +1,16 @@
-import os
 import pickle
 from pprint import pprint
+import os
+import json
+import platform
+
+OS = platform.system()
+ROOT_DIR = '~/data/AGQA/'
+if OS == 'Windows':
+    ROOT_DIR = 'data/'
 
 
-def load_scene_graphs(split: str = 'train'):
+def view_scene_graphs(split: str = 'train'):
     """
     from AGQA paper: Suppl 6.2 (page 13)
     Action Genome’s spatio-temporal scene graphs [19] annotate five sampled frames from each Charades action [47].
@@ -59,9 +66,8 @@ def load_scene_graphs(split: str = 'train'):
     :param split: 'train' or 'test'
     :return: None
     """
-    # scene_graphs = pickle.load(open(f'D:/AGQA/AGQA_scene_graphs/AGQA_{split}_stsgs.pkl', mode='rb'))
     # split = 'test'
-    scene_graphs = pickle.load(open(f'~/data/AGQA/AGQA_scene_graphs/AGQA_{split}_stsgs.pkl', mode='rb'))
+    scene_graphs = pickle.load(open(ROOT_DIR + f'AGQA_scene_graphs/AGQA_{split}_stsgs.pkl', mode='rb'))
     key = next(iter(scene_graphs.keys()))
     value = next(iter(scene_graphs.values()))
     # print(type(value['000105']['id'])) # str
@@ -78,5 +84,33 @@ def load_scene_graphs(split: str = 'train'):
         # pprint(value)
 
 
+def view_AGQA2_AGQA_balanced(split: str = 'train'):
+    balanced_qa = json.load(open(ROOT_DIR + f'AGQA2/AGQA_balanced/{split}_balanced.txt', mode='r', encoding='utf8'))
+    key = next(iter(balanced_qa.keys()))
+    value = next(iter(balanced_qa.values()))
+    print('key:', key)
+    print('value:', value)
+
+
+def view_AGQA2_CSV_formatted_questions_for_evaluation_csvs():
+    """
+    train : 1,600,894
+    test  :   669,207
+    total : 2,270,101
+    
+    이유는 모르겠지만 train, test, total 전부 description이 'none'임
+    그리고 train은 id가 1441052+159842개가 나누어져 있음
+    example:
+            ,key,       question,                                                   answer,vid_id,gif_name,description
+    0,00607-10552,Which object were they tidying before taking the thing they put down from somewhere?,table,00607,00607,none
+    1,00607-11002,Did the person interact with the thing they held before or after tidying up the first thing they went in front of?,after,00607,00607,none
+    ...
+    669206,ZZ4GP-1266,What was the person tidying before holding the thing they took?,floor,ZZ4GP,ZZ4GP,none
+
+    :return: None
+    """
+
+
 if __name__ == '__main__':
-    load_scene_graphs('test')
+    # view_scene_graphs('test')
+    view_AGQA2_AGQA_balanced('test')
