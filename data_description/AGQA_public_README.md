@@ -12,7 +12,7 @@ Download our Question-Answer pairs from our [website](https://cs.stanford.edu/pe
 ### Training Question Format
 ​
 ```json
-{...
+{
     'question_id': {
         'question': 'Did they contact a blanket?', 
         'answer': 'No', 
@@ -28,7 +28,7 @@ Download our Question-Answer pairs from our [website](https://cs.stanford.edu/pe
         'sg_grounding': {(start char, end char): [scene graph vertices]},
         'program': 'program string',
      }
- ...}
+ }
 ​
  ```
  
@@ -38,7 +38,7 @@ o4 in the question's local value is an identifer for blanket. English translatio
 ### Testing Question Format
  
 ```json
-{...
+{
     'question_id': {
         'question': 'Did they contact a blanket?, 
         'answer': 'No', 
@@ -64,7 +64,7 @@ o4 in the question's local value is an identifer for blanket. English translatio
         'sg_grounding': {(start char, end char): [scene graph vertices]},
         'program': 'program string',
      }
- ...}
+}
 ​
  ```
  
@@ -199,13 +199,13 @@ As an example, the question "Does someone contact a paper before drinking from a
 ```json
 {
     # refers to the nodes for 'a paper'. 'o23' is the idx reference for 'a paper' (see IDX.pkl)
-    "21-28": [ "o23/000083", "o23/000084" ... "o23/000813", "o23/000826"],
+    "21-28": [ "o23/000083", "o23/000084", ..., "o23/000813", "o23/000826"],
     
     # refers to the node for 'drinking from a  cup'. 'c106' is the idx reference for 'drinking from a cup' (see IDX.pkl)
     "36-55": ["c106/1"],  
     
     # refers to the frames localized by the phrase 'before drinking from a cup'
-    "29-55": ["000083", "000084" ... "000869", "000900"]
+    "29-55": ["000083", "000084", ..., "000869", "000900"]
 }
 ```
 ​
@@ -216,7 +216,7 @@ The scene graph files map video ids to scene graph dictionaries. Each scene grap
 Each vertex contains information about the other vertices to which it is connected. The type of information included depends on vertex type.
 ​
 ```json
-{...
+{
     'frameid': {
         'id': '000105' 
     'type':  'frame'
@@ -231,10 +231,11 @@ Each vertex contains information about the other vertices to which it is connect
     'next': next frame 
     'prev': previous frame
      }
- ...}
-​
+}
+```
+
 ```json
-{...
+{
     'actionid': {
         'id': 'c076/1'
     'charades': 'c076'
@@ -258,11 +259,11 @@ Each vertex contains information about the other vertices to which it is connect
     'prev_instance': previous c076 action
     'while': [list of co-occuring action objects]
      }
- ...}
-​
-​
+}
+```
+
 ```json
-{...
+{
     'objectid': {
         'id': 'o4/000105' 
     'type':  'object'
@@ -279,13 +280,13 @@ Each vertex contains information about the other vertices to which it is connect
     'next': next o4 object
     'prev': previous o4 object
      }
- ...}
+}
+```
 ​
- ```
 ​
-​
+note: relationid contains attention id(ex. `r1/000105`) and verb id(ex. `v025/000270`).
 ```json
-{...
+{
     'relationid': {
         'id': 'r22/000209' 
     'type':  'contact'
@@ -297,10 +298,11 @@ Each vertex contains information about the other vertices to which it is connect
     'next': next r22 relation
     'prev': previous r22 relation
      }
- ...}
-​```
-​
-​**Previous updates that are now solved**
+ }
+```
+
+
+**Previous updates that are now solved**
 
 *Updated 08/19/21*
 
