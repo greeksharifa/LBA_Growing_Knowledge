@@ -14,15 +14,20 @@ git submodule foreach update
 ```
 
 **참고: git submodule** 
-- https://data-engineer-tech.tistory.com/20
+
 - https://github.com/madeleinegrunde/AGQA_baselines_code
 - https://github.com/JingweiJ/ActionGenome.git
+- https://github.com/csbobby/STAR_Benchmark.git
+
+
+- https://data-engineer-tech.tistory.com/20
 
 ## Data Preparation
 
 - AGQA: https://cs.stanford.edu/people/ranjaykrishna/agqa/
 - Action Genome: https://www.actiongenome.org/#download
 - Charades: https://prior.allenai.org/projects/charades
+- STAR Benchmark: https://bobbywu.com/STAR/#repo
 
 ### Action Genome
 data에 대한 symbolic link 생성

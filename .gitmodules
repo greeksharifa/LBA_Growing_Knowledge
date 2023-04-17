@@ -4,3 +4,6 @@
 [submodule "ActionGenome"]
 	path = ActionGenome
 	url = https://github.com/JingweiJ/ActionGenome.git
+[submodule "STAR_Benchmark"]
+	path = STAR_Benchmark
+	url = https://github.com/csbobby/STAR_Benchmark.git
