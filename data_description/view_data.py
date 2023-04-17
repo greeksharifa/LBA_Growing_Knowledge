@@ -2,6 +2,7 @@ import pickle
 from pprint import pprint
 import os
 import json
+import sys
 import platform
 
 OS = platform.system()
@@ -9,6 +10,13 @@ ROOT_DIR = '~/data/AGQA/'
 if OS == 'Windows':
     ROOT_DIR = 'data/'
 
+"""
+AGQA2.0 dataset이 제일 최신 데이터이다.
+순서:
+- AGQA2.0 , and Google Drive data
+- AGQA Benchmark with programs and scene graphs(includes the additional program and scene graph data)
+- AGQA Benchmark(version of the benchmark that has the baseline results published in CVPR 2021)
+"""
 
 def view_scene_graphs(split: str = 'train'):
     """
@@ -32,6 +40,34 @@ def view_scene_graphs(split: str = 'train'):
     (= 4 × 5) frames annotated with scene graphs. The objects
     are grounded back in the video as bounding boxes.
     -----------------------------------------------------------------------------------------------
+    Github Issues: https://github.com/madeleinegrunde/AGQA_baselines_code/issues/6
+    The structure is quite different from Action Genome. I cover the structure of these scene graphs in the README
+    (at the bottom). We changed the structure to make it easier to use to generate questions.
+    We also augmented the annotations using the strategies outlined in sections 3.1 and 6.2 of our paper.
+    Some of the ways the updated structure helps us are:
+        - We made relationships their own nodes in the scene graph, so we could reason about them independently and
+            create questions like "What were they holding?"
+        - We added actions as nodes. Since we combined the Charades and Action Genome data, we could not just rely on
+            having object nodes as Action Genome does. Therefore, we also had nodes for Charades action annotations.
+        - When answering the questions programmatically, it was helpful to have pointers to the next and previous
+            instances of that particular relationship or object. The original Action Genome dataset does not have
+            those pointers.
+
+    We do not use attention relationships in the questions we generate, but they may remain in the scene graphs.
+    from AGQA paper : Finally, we remove all attention relationships (e.g. looking at) from Action Genome’s annotations
+        because our human evaluations indicated that evaluators were unable to accurately discern the actor’s gaze.
+
+    포인터(refernence)를 그냥 그대로 달아놓아서 node가 그대로 붙어 있는 것처럼 보인다. 그래서 json으로 저장할 수 없고 pickle로만 가능.
+
+    Q: The train-balanced-tgif.csv question files used for training has different format for each entry compared to the
+        train_balanced.txt question file format stated in the README files, what is the reason behind this?
+    A: The .csv file is formatted to have the correct headings needed to work with the models. It also does not include
+        much information about each question (for example the program or scene graph grounding).
+        This new format functioned to make it consistent with the data structure originally used for HCRN, HME, and PSAC
+        , without including extra information it would take a while to upload wherever you run your models.
+        The question content, answers, and ids will be the same.
+    -----------------------------------------------------------------------------------------------
+
     test key: len=1814, dict_keys(['YSKX3', 'T5ECU', 'AAH6R', '015XE', ..., 'LSKA2'])
 
     scene graph의 각 key(=vid)마다 type별로 들어가 있는 정보가 다름.
@@ -123,11 +159,13 @@ def view_scene_graphs(split: str = 'train'):
     print(counter)
 
 def view_AGQA2_AGQA_balanced(split: str = 'train'):
+    split = 'test'
     balanced_qa = json.load(open(ROOT_DIR + f'AGQA2/AGQA_balanced/{split}_balanced.txt', mode='r', encoding='utf8'))
-    key = next(iter(balanced_qa.keys()))
-    value = next(iter(balanced_qa.values()))
-    print('key:', key)
-    print('value:', value)
+    print(len(balanced_qa.keys()))  # test: 669207
+    # key = next(iter(balanced_qa.keys()))
+    # value = next(iter(balanced_qa.values()))
+    # print('len(key:', key)
+    # print('len(value):', len(value))
 
 
 def view_AGQA2_CSV_formatted_questions_for_evaluation_csvs():
@@ -138,15 +176,24 @@ def view_AGQA2_CSV_formatted_questions_for_evaluation_csvs():
     
     이유는 모르겠지만 train, test, total 전부 description이 'none'임
     그리고 train은 id가 1441052+159842개가 나누어져 있음
-    example:
+    test:
             ,key,       question,                                                   answer,vid_id,gif_name,description
     0,00607-10552,Which object were they tidying before taking the thing they put down from somewhere?,table,00607,00607,none
     1,00607-11002,Did the person interact with the thing they held before or after tidying up the first thing they went in front of?,after,00607,00607,none
     ...
     669206,ZZ4GP-1266,What was the person tidying before holding the thing they took?,floor,ZZ4GP,ZZ4GP,none
 
+    그리고, 'data/AGQA2/CSV_formatted_questions_for_evaluation_csvs/balanced/Test_frameqa_question-balanced.csv' 파일은
+            'data/AGQA2/AGQA_balanced/test_balanced.txt' 파일과 같은 질문들을 담고 있음.
+        하지만, test_balanced.txt에는 scene graph grounding 등 더 많은 정보들이 포함되어 있음.
+        csv 파일은 순수하게 testing question을 위한 것임.
+            csv header가 [,key,question,answer,vid_id,gif_name,description]만 존재함.
+        'data/AGQA2/CSV_formatted_questions_for_evaluation_csvs/balanced/` 말고 다른 폴더(decomp/, novel compositions/ 등)
+        도 역시 세팅만 다를 뿐 csv header가 [,key,question,answer,vid_id,gif_name,description]만 존재
+
     :return: None
     """
+
 
 
 if __name__ == '__main__':

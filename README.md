@@ -23,4 +23,11 @@ git submodule foreach update
 - AGQA: https://cs.stanford.edu/people/ranjaykrishna/agqa/
 - Action Genome: https://www.actiongenome.org/#download
 - Charades: https://prior.allenai.org/projects/charades
-- 
+
+### Action Genome
+data에 대한 symbolic link 생성
+```bash
+ln -s <original path> <link path>
+ln -s ~/data/Charades/Charades_v1_480/  dataset/ag/videos
+ln -s ~/data/Action_Genome/annotations/ dataset/ag/annotations
+```
