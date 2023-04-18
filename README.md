@@ -36,3 +36,14 @@ ln -s <original path> <link path>
 ln -s ~/data/Charades/Charades_v1_480/  dataset/ag/videos
 ln -s ~/data/Action_Genome/annotations/ dataset/ag/annotations
 ```
+
+### STAR Benchmark
+
+- homepage: https://bobbywu.com/STAR/
+- code: https://github.com/csbobby/STAR_Benchmark
+
+---
+
+## challenge
+
+- STAR: https://eval.ai/web/challenges/challenge-page/1325/overview

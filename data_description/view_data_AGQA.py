@@ -6,9 +6,7 @@ import sys
 import platform
 
 OS = platform.system()
-ROOT_DIR = '~/data/AGQA/'
-if OS == 'Windows':
-    ROOT_DIR = 'data/'
+ROOT_DIR = 'data/AGQA/' if OS == 'Windows' else '~/data/AGQA/'
 
 """
 AGQA2.0 dataset이 제일 최신 데이터이다.
