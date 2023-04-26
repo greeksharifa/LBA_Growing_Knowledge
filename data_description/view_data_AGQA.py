@@ -164,6 +164,47 @@ def view_AGQA2_AGQA_balanced(split: str = 'train'):
     # value = next(iter(balanced_qa.values()))
     # print('len(key:', key)
     # print('len(value):', len(value))
+    '''
+    {"YSKX3-8": {
+        "question": "Were they interacting with a blanket while holding a pillow?", 
+        "answer": "no", 
+        "video_id": "YSKX3", 
+        "global": ["exists"], 
+        "local": "yes-no-o4-while-c076", 
+        "ans_type": "binary", 
+        "steps": 3, 
+        "semantic": "object", 
+        "structural": "verify", 
+        "novel_comp": 0, 
+        "more_steps": 0, 
+        "program": "Exists(blanket, Iterate(Localize(while, holding a pillow), Filter(frame, [objects])))", 
+        "sg_grounding": {
+            "27-36": [], 
+            "43-59": ["c076/1"], 
+            "37-59": ["000247", "000252", "000254", "000258", "000268", "000269", "000270"]}, 
+        "nc_seq": 0, "nc_sup": 0, "nc_dur": 0, "nc_objrel": 0, 
+        "indirect": 1, "i_obj": 0, "i_rel": 0, "i_act": 0, "i_temp": 1, 
+        "direct_equiv": "YSKX3-9"
+    }, ...}
+    
+    {
+        'question_id': {
+            'question': 'Did they contact a blanket?', 
+            'answer': 'No', 
+            'video_id': 'YSKX3', 
+            'global': ['exists', 'obj-rel'],
+            'local': 'yes-no-o4', 
+            'ans_type': 'binary',
+            'steps': 1,
+            'semantic': 'object',
+            'structural': 'verify',
+            'novel_comp': 0,
+            'more_steps': 0,
+            'sg_grounding': {(start char, end char): [scene graph vertices]},
+            'program': 'program string',
+        }
+    }
+    '''
 
 
 def view_AGQA2_CSV_formatted_questions_for_evaluation_csvs():
