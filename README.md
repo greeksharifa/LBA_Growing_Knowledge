@@ -22,6 +22,13 @@ git submodule foreach update
 
 - https://data-engineer-tech.tistory.com/20
 
+
+### Requirements
+```bash
+conda install -c conda-forge spacy
+python -m spacy download en
+```
+
 ## Data Preparation
 
 - AGQA: https://cs.stanford.edu/people/ranjaykrishna/agqa/

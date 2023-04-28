@@ -204,6 +204,14 @@ def view_AGQA2_AGQA_balanced(split: str = 'train'):
             'program': 'program string',
         }
     }
+    We handcraft 269 natural language question frames that can be answered from a set of 28 programs.
+    
+    Our 28 templates generate AGQA’s question-answer
+pairs (Table 14). Each template has multiple natural language
+options that can be filled with scene graph information
+to create a diverse set of questions (Figure 10).
+    The templates are also each associated with a program that automatically generates the answer 
+    to questions using the spatio-temporal scene graph. 
     '''
 
 

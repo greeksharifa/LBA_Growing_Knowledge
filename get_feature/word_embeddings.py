@@ -8,7 +8,8 @@ import platform
 
 logging.set_verbosity_error()
 OS = platform.system()
-ROOT_DIR = 'data/AGQA/' if OS == 'Windows' else '~/data/AGQA/'
+print('OS:', OS)
+ROOT_DIR = 'data/AGQA/' if OS == 'Windows' else '/home/ywjang/data/AGQA/'
 
 
 tokenizer = AutoTokenizer.from_pretrained("roberta-base")
@@ -30,19 +31,31 @@ scene_graphs = pickle.load(open(ROOT_DIR + f'AGQA_scene_graphs/AGQA_{split}_stsg
 idx2eng = json.load(open(ROOT_DIR + 'ENG.txt', mode='r', encoding='utf8'))
 
 for i, (question_id, q_value) in enumerate(balanced_qa.items()):
-    if i > 5:
-        break
+    # if i > 5:
+    #     break
     print('question_id:', question_id)
-
     word_list = []
     sg_grounding = q_value["sg_grounding"]
+    video_id = q_value["video_id"]
     for idxs, sg_key_list in sg_grounding.items():
         if len(sg_key_list) == 0:
             continue
         for sg_key in sg_key_list:
-            verbs = scene_graphs[sg_key]['names']
-            verbs = list(map(lambda x: idx2eng[x], verbs))
-            word_list.extend(verbs)
+            # print('sg_key:', sg_key)
+            sg = scene_graphs[video_id][sg_key]
+            if 'verb' not in sg.keys():     # sg['type'] not in ['frame', 'act', 'object']
+                continue
+            verbs = sg['verb']
+            # print(type(verbs))
+            if type(verbs) is list:
+                for verb in verbs:
+                    word_list.append(idx2eng[verb['class']])
+            else:
+                word_list.extend(list(map(lambda x: idx2eng[x], verbs['names'])))
 
+    word_list = set(word_list)
     print('word_list:', word_list)
     print()
+
+
+list(map(lambda x: x['type'], sg['verb']))
