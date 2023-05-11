@@ -57,6 +57,8 @@ def get_knowledge(qa:dict, scene_graphs:dict, idx2eng:dict, save_path=None, over
             with open(save_path, 'w', encoding='utf8') as f:
                 json.dump(grounded_knowledge, f)
 
+    print('done. len is:', len(grounded_knowledge))
+
     return grounded_knowledge
 
 

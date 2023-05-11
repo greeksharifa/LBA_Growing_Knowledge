@@ -20,6 +20,8 @@ def get_phrase_of_question(qa:dict, save_path=None, overwrite:bool=False, verbos
     :param verbose: if true, print {question_id: list of phrases} per 10000 questions
     :return:
     """
+    print('loading {:<25s}: {:<75s} ...'.format('phrases_path', save_path), end='')
+
     if not overwrite and save_path is not None and os.path.isfile(save_path):
         with open(save_path, 'r', encoding='utf8') as f:
             phrases = json.load(f)
@@ -47,6 +49,8 @@ def get_phrase_of_question(qa:dict, save_path=None, overwrite:bool=False, verbos
         if save_path:
             with open(save_path, 'w', encoding='utf8') as f:
                 json.dump(phrases, f)
+
+    print('done. len is:', len(phrases))
 
     return phrases
 
