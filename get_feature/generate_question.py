@@ -16,22 +16,30 @@ def get_completion(prompt, model="gpt-3.5-turbo"):
     return response.choices[0].message["content"]
 
 
-uncertain_phrase = "a pillow"
+uncertain_phrase = "holding a pillow"
 
 # What questions can you ask when you're not sure about the meaning of text separated by triple backticks?\
 
 # Your job is to generate 3 questions about the text, given a video and some text associated with it.
 # Text is delimited by triple backticks.
 
-
-prompt=f"""\\
+"""
 You've been given a video and some text delimited by a triple backtick.
 And you are not sure what the text means.
 
-Your task is to generate 3 questions about the text to find out what it means.\
+Your task is to generate 3 questions about the text to find out what it means.
+Each question should contain a maximum of 20 words.
+"""
+
+
+prompt=f"""\\
+You are given a video and a phrase of unclear meaning, separated by a triple backtick.
+You are not sure what the phrase means.
+
+Your task is to generate 3 questions about the phrase to find out its meaning.
 Each question should contain a maximum of 20 words.
 
-text: ```{uncertain_phrase}```
+phrase: ```{uncertain_phrase}```
 """
 
 response = get_completion(prompt)
