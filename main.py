@@ -26,13 +26,14 @@ def main():
                                        save_path=config_path['grounded_knowledge_path'], overwrite=False, verbose=False)
 
     phrases = get_phrase_of_question(qa=balanced_qa,
-                                     save_path=config_path['phrases_path'], overwrite=False, verbose=False)
+                                     save_path=config_path['phrases_path'], overwrite=True, verbose=True)
 
     for i, question_id in enumerate(balanced_qa.keys()):
         if i>=5:
             break
         knowledge_sentences = grounded_knowledge[question_id]
-        phrases_sentences = phrases[question_id]
+        # phrases_sentences = phrases[question_id]
+        phrases_sentences = [t[1] for t in phrases[question_id]]
         print('\n\nquestion_id         :', question_id)
         print('knowledge_sentences :')
         pprint(knowledge_sentences)
@@ -47,6 +48,14 @@ def main():
         print('uncertain_phrase_idx:', uncertain_phrase_idx)
         uncertain_phrases = phrases_sentences[uncertain_phrase_idx]
         print('uncertain_phrases:', uncertain_phrases)
+
+        # TODO:
+        # ChatCaptioner/Video_ChatCaptioner/generate_caption_msvd.py 을 수정해서
+        # prompt 수정: uncertainty를 반영하게
+        # uniform frame sampling 대신 question에 grounding된 scene graph에 포함된 frame만 선택하여
+        # 해당 frame들에 대해 질문 생성하기
+
+
 
 
 

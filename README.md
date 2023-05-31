@@ -23,6 +23,17 @@ git submodule foreach update
 - https://data-engineer-tech.tistory.com/20
 
 
+### AGQA benchmarks erorr resolution
+
+- https://ssaru.github.io/2021/05/05/20210505-til_install_rtx3090_supported_pytorch/
+- https://kingnamji.tistory.com/57
+- https://bluecolorsky.tistory.com/71
+- https://developer.nvidia.com/cuda-gpus
+- https://chaloalto.tistory.com/23
+- https://yjs-program.tistory.com/294?category=804886
+- https://stackoverflow.com/questions/58194852/modulenotfounderror-no-module-named-numpy-core-multiarray-r
+
+
 ### Requirements
 ```bash
 conda install -c conda-forge spacy

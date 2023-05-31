@@ -13,38 +13,46 @@ nlp = spacy.load("en_core_web_sm")
 
 def get_phrase_of_question(qa:dict, save_path=None, overwrite:bool=False, verbose:bool=False) -> dict:
     """
-
-    :param qa:
+    return the phrases and its indices of question.
+    :param qa: QnA dict
     :param save_path: directory path to save phrases dict
     :param overwrite: overwrite json file to save_path
     :param verbose: if true, print {question_id: list of phrases} per 10000 questions
-    :return:
+    :return: phrases: dir. {question_id: [
+                                            (start_idx, end_idx),
+                                            phrase
+                                         ]
+                            , ...}
     """
-    print('loading {:<25s}: {:<75s} ...'.format('phrases_path', save_path), end='')
 
     if not overwrite and save_path is not None and os.path.isfile(save_path):
+        print('loading {:<25s}: {:<75s} ...'.format('phrases_path', save_path), end='')
         with open(save_path, 'r', encoding='utf8') as f:
             phrases = json.load(f)
     else:
+        print('creating {:<25s}: {:<75s} ...'.format('phrases_path', save_path))
+
         phrases = {}
         for i, (question_id, value) in enumerate(qa.items()):
-            # if i > 5:
-            #     break
+            # if i > 5: break
             question = value["question"]
 
             doc = nlp(question)     # Parse the sentence with spaCy
             phrases[question_id] = []
 
             if verbose and i % 10000 == 0:
-                print('question:', question_id, question)
-                print()
+                print('\nquestion:', question_id, question)
 
             for token in doc:
                 if len([child for child in token.children]) != 0:
-                    phrases[question_id].append(' '.join([str(t) for t in token.subtree]))
+                    phrase = ' '.join([str(t) for t in token.subtree])
+                    phrases[question_id].append(
+                        ((token.idx, token.idx + len(phrase)),
+                        phrase)
+                    )
 
                     if verbose and i % 10000 == 0:
-                        print('{:<15s} | '.format(token.text), ' '.join([str(t) for t in token.subtree]))
+                        print('{:<15s} | {:3d}-{:3d} | '.format(token.text, token.idx, token.idx + len(phrase), phrase))
 
         if save_path:
             with open(save_path, 'w', encoding='utf8') as f:
