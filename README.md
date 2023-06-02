@@ -42,6 +42,14 @@ python -m spacy download en
 
 ## Data Preparation
 
+- Download Charades RGB frames at 24fps
+```bash
+cd /home/{username}/data/Charades/
+wget https://ai2-public-datasets.s3-us-west-2.amazonaws.com/charades/Charades_v1_rgb.tar
+tar -xvf Charades_v1_rgb.tar
+```
+
+
 - AGQA: https://cs.stanford.edu/people/ranjaykrishna/agqa/
 - Action Genome: https://www.actiongenome.org/#download
 - Charades: https://prior.allenai.org/projects/charades

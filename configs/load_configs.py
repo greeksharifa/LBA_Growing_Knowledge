@@ -7,7 +7,7 @@ def get_config_path():
     root_data_path = f'/home/{username}/data/AGQA/'
     features_path = os.path.join(root_data_path, 'features/')
 
-    configs_path = {
+    config_path = {
         'root_path': root_data_path,
         'features_path': features_path,
         'test_qa_path': os.path.join(root_data_path, 'AGQA2/AGQA_balanced/test_balanced.txt'),
@@ -19,4 +19,4 @@ def get_config_path():
 
     }
 
-    return configs_path
+    return config_path
